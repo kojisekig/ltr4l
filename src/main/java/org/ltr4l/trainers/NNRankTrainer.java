@@ -16,6 +16,8 @@
 
 package org.ltr4l.trainers;
 
+import java.util.List;
+
 import org.ltr4l.nn.Activation;
 import org.ltr4l.nn.MLP;
 import org.ltr4l.nn.NetworkShape;
@@ -23,24 +25,20 @@ import org.ltr4l.nn.Optimizer;
 import org.ltr4l.query.Document;
 import org.ltr4l.query.Query;
 import org.ltr4l.query.QuerySet;
-import org.ltr4l.tools.Config;
-import org.ltr4l.tools.Error;
 import org.ltr4l.tools.Regularization;
-
-import java.util.List;
 
 /**
  * The implementation of MLPTrainer which uses the
  * Neural Network Ranking (NNRank) algorithm.
  *
  */
-public class NNRankTrainer extends MLPTrainer<MLP> {
+public class NNRankTrainer extends MLPTrainer<MLP, MLPTrainer.MLPConfig> {
   private final int outputNodeNumber;
 
   //Last layer of the network has a number of nodes equal to the number of categories.
   //That layer is created in the constructor, so it is not necessary to specify last layer in config file.
-  NNRankTrainer(QuerySet training, QuerySet validation, Config config) {
-    super(training, validation, config, true);
+  NNRankTrainer(QuerySet training, QuerySet validation, String file) {
+    super(training, validation, file, true);
     outputNodeNumber = QuerySet.findMaxLabel(trainingSet) + 1;
   }
 

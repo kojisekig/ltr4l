@@ -16,34 +16,34 @@
 
 package org.ltr4l.trainers;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import org.ltr4l.Ranker;
 import org.ltr4l.query.Document;
 import org.ltr4l.query.Query;
 import org.ltr4l.query.QuerySet;
-import org.ltr4l.tools.Error;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.ltr4l.tools.Config;
+import org.ltr4l.tools.Error;
 
 /**
  * The implementation of LTRTrainer which uses the
  * PRank(Perceptron Ranking) algorithm.
  *
  */
-public class PRankTrainer extends LTRTrainer<PRank> {
+public class PRankTrainer extends LTRTrainer<PRank, Config> {
   private final  List<Document> trainingDocList;
 
-  PRankTrainer(QuerySet training, QuerySet validation, Config config) {
-    super(training, validation, config);
+  PRankTrainer(QuerySet training, QuerySet validation, String file) {
+    super(training, validation, file);
     maxScore = 0.0;
     trainingDocList = new ArrayList<>();
     for (Query query : trainingSet)
@@ -60,6 +60,11 @@ public class PRankTrainer extends LTRTrainer<PRank> {
   @Override
   protected Error makeErrorFunc(){
     return new Error.Square();
+  }
+
+  @Override
+  public Class<Config> getConfigClass() {
+    return Config.class;
   }
 
   protected double calculateLoss(List<Query> queries) {

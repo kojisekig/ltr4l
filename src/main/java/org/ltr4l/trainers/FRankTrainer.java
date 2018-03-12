@@ -16,13 +16,12 @@
 
 package org.ltr4l.trainers;
 
+import java.util.HashMap;
+
 import org.ltr4l.nn.Activation;
-import org.ltr4l.tools.Config;
 import org.ltr4l.query.Document;
 import org.ltr4l.query.Query;
 import org.ltr4l.query.QuerySet;
-
-import java.util.HashMap;
 
 /**
  * An extension of RankNetTrainer.
@@ -33,8 +32,8 @@ import java.util.HashMap;
 public class FRankTrainer extends RankNetTrainer {
 
 
-  FRankTrainer(QuerySet training, QuerySet validation, Config config) {
-    super(training, validation, config);
+  FRankTrainer(QuerySet training, QuerySet validation, String file) {
+    super(training, validation, file);
   }
 
   @Override

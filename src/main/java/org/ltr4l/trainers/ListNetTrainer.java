@@ -18,12 +18,13 @@ package org.ltr4l.trainers;
 
 import java.util.List;
 
-import org.ltr4l.Ranker;
-import org.ltr4l.nn.*;
+import org.ltr4l.nn.Activation;
+import org.ltr4l.nn.ListNetMLP;
+import org.ltr4l.nn.NetworkShape;
+import org.ltr4l.nn.Optimizer;
 import org.ltr4l.query.Document;
 import org.ltr4l.query.Query;
 import org.ltr4l.query.QuerySet;
-import org.ltr4l.tools.Config;
 import org.ltr4l.tools.Error;
 import org.ltr4l.tools.Regularization;
 
@@ -32,12 +33,12 @@ import org.ltr4l.tools.Regularization;
  * Despite note extending MLPTrainer, this trainer
  * trains an MLP network.
  */
-public class ListNetTrainer extends LTRTrainer<ListNetMLP> {
+public class ListNetTrainer extends LTRTrainer<ListNetMLP, MLPTrainer.MLPConfig> {
   private double lrRate;
   private double rgRate;
 
-  ListNetTrainer(QuerySet training, QuerySet validation, Config config) {
-    super(training, validation, config);
+  ListNetTrainer(QuerySet training, QuerySet validation, String file) {
+    super(training, validation, file);
     lrRate = config.getLearningRate();
     rgRate = config.getReguRate();
     maxScore = 0;
@@ -57,6 +58,11 @@ public class ListNetTrainer extends LTRTrainer<ListNetMLP> {
   @Override
   protected Error makeErrorFunc(){
     return new Error.Entropy();
+  }
+
+  @Override
+  public Class<MLPTrainer.MLPConfig> getConfigClass(){
+    return MLPTrainer.MLPConfig.class;
   }
 
   @Override

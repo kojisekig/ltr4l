@@ -98,39 +98,88 @@ $ ant clean package
 4-run the following command :
 
 ```
-java -jar LTR4L-X.X.X.jar data/MQ2008/Fold1/train.txt data/MQ2008/Fold1/vali.txt confs/ranknet.config
+java -jar ranknet LTR4L-X.X.X.jar data/MQ2008/Fold1/train.txt data/MQ2008/Fold1/vali.txt confs/ranknet.json
 ```
 
 5- open the report file:
 
 ```
-open report.csv
+open ranknet-report.csv
 ```
 
 #### Changing Parameters
 Below is an example of a config file:
+
 ```
-name:RankNet
-numIterations:100
-learningRate:0.0001
-optimizer:sgd
-weightInit:normal
-reguFunction:L2
-reguRate:0.01
-layers:10,Sigmoid 1,Identity
+{
+  "algorithm" : "RankNet",
+  "numIterations" : 100,
+  "params" : {
+    "learningRate" : 0.00001,
+    "optimizer" : "adam",
+    "weightInit" : "xavier",
+    "regularization" : {
+      "regularizer" : "L2",
+      "rate" : 0.01
+    },
+    "layers" : [
+      {
+        "activator" : "Sigmoid",
+        "num" : 10
+      }
+    ]
+  },
+
+  "dataSet" : {
+    "training" : "data/MQ2008/Fold1/train.txt",
+    "validation" : "data/MQ2008/Fold1/vali.txt",
+    "test" : "data/MQ2008/Fold1/test.txt"
+  },
+
+  "model" : {
+    "format" : "json",
+    "file" : "ranknet-model.json"
+  },
+
+  "evaluation" : {
+    "evaluator" : "NDCG",
+    "params" : {
+      "k" : 10
+    }
+  },
+
+  "report" : {
+    "format" : "csv",
+    "file" : "ranknet-report.csv"
+  }
+}
 ```
 
 You must specify the number of nodes and activation for each hidden layer and the output layer.
 However, for NNRank, you do not need to specify the final layer.
 For example, to add another layer of 3 ReLu nodes and the output layer to Sigmoid, change layers to:
+
 ```
-layers:10,Sigmoid 3,Relu 1,Sigmoid
+    "layers" : [
+      {
+        "activator" : "Sigmoid",
+        "num" : 10
+      },
+      {
+        "activator" : "ReLU",
+        "num" : 3
+      },
+      {
+        "activator" : "Sigmoid",
+        "num" : 1
+      }
+    ]
 ```
 
 You can also change the training data and validation data by changing the path of the first and second argument while executing the program:
 
 ```
-java -jar data/MQ2007/Fold1/train.txt data/MQ2007/Fold1/vali.txt confs/ranknet.config
+java -jar ranknet data/MQ2007/Fold1/train.txt data/MQ2007/Fold1/vali.txt confs/ranknet.json
 ```
 
 
