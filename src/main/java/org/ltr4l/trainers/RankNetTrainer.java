@@ -35,7 +35,7 @@ import org.ltr4l.tools.Regularization;
  * RankNet algorithm.
  *
  */
-public class RankNetTrainer extends MLPTrainer<RankNetMLP, MLPTrainer.MLPConfig> {
+public class RankNetTrainer extends MLPTrainer<RankNetMLP> {
   protected final List<Document[][]> trainingPairs;
   protected final List<Document[][]> validationPairs;
 

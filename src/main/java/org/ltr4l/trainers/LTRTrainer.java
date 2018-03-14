@@ -89,8 +89,7 @@ public abstract class LTRTrainer<R extends Ranker, C extends Config> implements 
       validate(i);
     }
     report.close();
-    // TODO: do writeModel() here...
-    //ranker.writeModel(config.getProps());
+    ranker.writeModel(config);
   }
 
   protected abstract <R extends Ranker> R constructRanker();

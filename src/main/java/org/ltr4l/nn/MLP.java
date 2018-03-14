@@ -16,18 +16,15 @@
 
 package org.ltr4l.nn;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 import org.ltr4l.Ranker;
 import org.ltr4l.query.Document;
 import org.ltr4l.tools.Error;
 import org.ltr4l.tools.Regularization;
+import org.ltr4l.trainers.MLPTrainer;
 
 /**
  * MLP is a Ranker which uses a Multi-Layer Perceptron network.
@@ -39,7 +36,7 @@ import org.ltr4l.tools.Regularization;
  * MLPRankers should have methods for forward propagation, backpropagation, and updating of weights.
  *
  */
-public class MLP extends Ranker {
+public class MLP extends Ranker<MLPTrainer.MLPConfig> {
   protected final List<List<Node>> network;
   protected long iter;
   protected int numAccumulatedDer;
@@ -121,7 +118,8 @@ public class MLP extends Ranker {
   }
 
   @Override
-  public void writeModel(Properties props, String file) {
+  public void writeModel(MLPTrainer.MLPConfig config, String file) {
+/* TODO: implement
     try (PrintWriter pw = new PrintWriter(new FileOutputStream(file))) {
       props.store(pw, "Saved model");
       pw.println("model=" + obtainWeights()); //To ensure model gets written at the end.
@@ -131,6 +129,7 @@ public class MLP extends Ranker {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+ */
   }
 
   @Override

@@ -16,20 +16,17 @@
 
 package org.ltr4l.nn;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 
 import org.ltr4l.Ranker;
 import org.ltr4l.query.Document;
 import org.ltr4l.tools.Error;
 import org.ltr4l.tools.Regularization;
+import org.ltr4l.trainers.MLPTrainer;
 
-public class SortNetMLP extends Ranker {
+public class SortNetMLP extends Ranker<MLPTrainer.MLPConfig> {
   private final List<List<SNode>> network;
   private long iter;
   private int numAccumulatedDer;
@@ -120,7 +117,7 @@ public class SortNetMLP extends Ranker {
         .collect(Collectors.toList()))
         .collect(Collectors.toList());
   }
-
+/* TODO: remove
   @Override
   public void writeModel(Properties props, String file) {
     try (PrintWriter pw = new PrintWriter(new FileOutputStream(file))) {
@@ -132,6 +129,21 @@ public class SortNetMLP extends Ranker {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+*/
+  @Override
+  public void writeModel(MLPTrainer.MLPConfig config, String file) {
+/* TODO: implement
+    try (PrintWriter pw = new PrintWriter(new FileOutputStream(file))) {
+      props.store(pw, "Saved model");
+      pw.println("model=" + obtainWeights()); //To ensure model gets written at the end.
+      //props.setProperty("model", obtainWeights().toString());
+      //props.store(pw, "Saved model");
+
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+ */
   }
 
   @Override

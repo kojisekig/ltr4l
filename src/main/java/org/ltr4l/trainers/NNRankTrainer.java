@@ -32,7 +32,7 @@ import org.ltr4l.tools.Regularization;
  * Neural Network Ranking (NNRank) algorithm.
  *
  */
-public class NNRankTrainer extends MLPTrainer<MLP, MLPTrainer.MLPConfig> {
+public class NNRankTrainer extends MLPTrainer<MLP> {
   private final int outputNodeNumber;
 
   //Last layer of the network has a number of nodes equal to the number of categories.

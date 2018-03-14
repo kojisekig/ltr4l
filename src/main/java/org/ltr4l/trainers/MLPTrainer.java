@@ -37,7 +37,7 @@ import org.ltr4l.tools.Regularization;
  * As the training method can be different depending on the algorithm used,
  * the method train() must be implemented by child classes.
  */
-abstract class MLPTrainer<M extends MLP, C extends MLPTrainer.MLPConfig> extends LTRTrainer<M, C> {
+public abstract class MLPTrainer<M extends MLP> extends LTRTrainer<M, MLPTrainer.MLPConfig> {
   protected double maxScore;
   protected double lrRate;
   protected double rgRate;

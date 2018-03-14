@@ -16,14 +16,9 @@
 
 package org.ltr4l.trainers;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -82,7 +77,7 @@ public class PRankTrainer extends LTRTrainer<PRank, Config> {
   }
 }
 
-class PRank extends Ranker{
+class PRank extends Ranker<Config> {
   protected double[] weights;
   protected double[] thresholds;
 
@@ -105,6 +100,7 @@ class PRank extends Ranker{
     return thresholds;
   }
 
+  /* TODO: remove
   public void writeModel(Properties props, String file) {
     try (PrintWriter pw = new PrintWriter(new FileOutputStream(file))) {
       props.store(pw, "Saved model");
@@ -116,6 +112,23 @@ class PRank extends Ranker{
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+  */
+
+  @Override
+  public void writeModel(Config config, String file) {
+    /* TODO: implement
+    try (PrintWriter pw = new PrintWriter(new FileOutputStream(file))) {
+      props.store(pw, "Saved model");
+      pw.println("model=" + Arrays.toString(weights)); //To ensure model gets written at the end.
+      pw.println("thresholds=" + Arrays.toString(thresholds));
+      //props.setProperty("model", obtainWeights().toString());
+      //props.store(pw, "Saved model");
+
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    */
   }
 
   //Weight and thresholds must be given as string, separated by "++"
@@ -162,7 +175,6 @@ class PRank extends Ranker{
       thresholds[r] -= tau[r];
     }
   }
-
 
   @Override
   public double predict(List<Double> features) {
